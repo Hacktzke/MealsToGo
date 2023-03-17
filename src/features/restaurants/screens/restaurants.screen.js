@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { StatusBar, FlatList, Platform } from 'react-native';
 import styled from 'styled-components/native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { Searchbar, ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import { RestaurantInfoCard } from '../components/restaurant-info-card.component';
+import { Search } from '../components/search.component';
 import { Spacer } from '../../../components/spacer/spacer.component';
 import { RestaurantContext } from '../../../services/restaurants/restaurants.context';
 
@@ -12,10 +13,6 @@ const isAndroid = Platform.OS === 'android';
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
   margin-top: ${isAndroid ? StatusBar.currentHeight : 0}px;
-`;
-
-const SearchContainer = styled.View`
-  padding: ${(props) => props.theme.space[3]};
 `;
 
 const RestaurantList = styled(FlatList).attrs({
@@ -41,9 +38,7 @@ export const RestaurantsScreen = () => {
           <Loading size={50} animating={true} color="green" />
         </LoadingContainer>
       )}
-      <SearchContainer>
-        <Searchbar />
-      </SearchContainer>
+      <Search />
       <RestaurantList
         data={restaurants}
         renderItem={({ item }) => (
