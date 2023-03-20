@@ -14,6 +14,7 @@ export const RestaurantsNavigator = () => {
       }}
     >
       <RestaurantStack.Screen
+        // eslint-disable-next-line
         name="Restaurants"
         component={RestaurantsScreen}
       />

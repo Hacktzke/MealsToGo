@@ -1,6 +1,8 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
 import { theme } from './src/infrastructure/theme/index';
 import {
@@ -14,6 +16,18 @@ import { ThemeProvider } from 'styled-components/native';
 import { RestaurantsContextProvider } from './src/services/restaurants/restaurants.context';
 import { LocationContextProvider } from './src/services/location/location.context';
 import { FavouritesContextProvider } from './src/services/favourites/favourites.context';
+import { AuthenticationContextProvider } from './src/services/authentication/authentication.context';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyB5zYfZkxy4qiW32DjZFaORDO7jglP_358',
+  authDomain: 'mealstogo-5c176.firebaseapp.com',
+  projectId: 'mealstogo-5c176',
+  storageBucket: 'mealstogo-5c176.appspot.com',
+  messagingSenderId: '101014280051',
+  appId: '1:101014280051:web:7d8d3cdcbcce95101c5706',
+};
+
+firebase.initializeApp(firebaseConfig);
 
 export default function App() {
   const [oswaldLoaded] = useOswald({
@@ -30,13 +44,15 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <ThemeProvider theme={theme}>
-        <FavouritesContextProvider>
-          <LocationContextProvider>
-            <RestaurantsContextProvider>
-              <Navigation />
-            </RestaurantsContextProvider>
-          </LocationContextProvider>
-        </FavouritesContextProvider>
+        <AuthenticationContextProvider>
+          <FavouritesContextProvider>
+            <LocationContextProvider>
+              <RestaurantsContextProvider>
+                <Navigation />
+              </RestaurantsContextProvider>
+            </LocationContextProvider>
+          </FavouritesContextProvider>
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </SafeAreaProvider>
